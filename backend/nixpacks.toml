@@ -1,17 +1,22 @@
 [phases.setup]
-nixPkgs = [
-  "python38",
-  "gcc",
-  "unixODBC",
-  "mssql-tools"
-]
+packages = ["python38", "gcc", "unixODBC", "curl", "gnupg2", "build-essential"]
 
 [phases.install]
-cmds = [
-  "python -m venv /opt/venv",
-  ". /opt/venv/bin/activate",
-  "pip install --no-cache-dir -r requirements.txt"
+# Use venv and install Python dependencies
+commands = [
+    "python3 -m venv /opt/venv",
+    ". /opt/venv/bin/activate",
+    "pip install --no-cache-dir -r requirements.txt"
 ]
 
-[start]
-cmd = "python temp_api.py"
+[phases.build]
+# Optional: can leave empty if no build needed
+commands = []
+
+[phases.start]
+# Start Flask app
+commands = ["python temp_api.py"]
+
+[env]
+# Ensure Python venv is used
+PATH = "/opt/venv/bin:$PATH"

@@ -1,31 +1,32 @@
-# Use Windows Server Core base image with Python 3.8
-FROM mcr.microsoft.com/windows/servercore:ltsc2019
+# Use official Python 3.8 slim image
+FROM python:3.8-slim
 
-# Install Python 3.8 (if not already available)
-ADD https://www.python.org/ftp/python/3.8.10/python-3.8.10-amd64.exe C:\\python-installer.exe
-RUN powershell -Command \
-    Start-Process C:\\python-installer.exe -ArgumentList '/quiet InstallAllUsers=1 PrependPath=1 Include_pip=1' -Wait; \
-    Remove-Item -Force C:\\python-installer.exe
+# Install required packages for ODBC
+RUN apt-get update && apt-get install -y \
+    curl \
+    gnupg2 \
+    unixodbc \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install SQL Server Native Client 11.0
-ADD https://download.microsoft.com/download/0/7/D/07D0D8D6-F2A7-4C27-8D93-2E684B1E2AF1/sqlncli.msi C:\\sqlncli.msi
-RUN powershell -Command \
-    Start-Process msiexec.exe -ArgumentList '/i C:\\sqlncli.msi /quiet /qn /norestart IACCEPTSQLNCLILICENSETERMS=YES' -Wait; \
-    Remove-Item -Force C:\\sqlncli.msi
+# Install Microsoft ODBC Driver 18 for SQL Server
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+    && curl https://packages.microsoft.com/config/debian/11/prod.list -o /etc/apt/sources.list.d/mssql-release.list \
+    && apt-get update \
+    && ACCEPT_EULA=Y apt-get install -y msodbcsql18 \
+    && rm -rf /var/lib/apt/lists/*
 
-# Create app directory and copy your app
+# Set working directory
 WORKDIR /app
+
+# Copy application code
 COPY . /app
 
 # Install Python dependencies
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose Flask default port
+# Expose Flask port
 EXPOSE 5000
-
-# Set environment to production (optional but recommended)
-ENV FLASK_ENV=production
 
 # Start the Flask app
 CMD ["python", "temp_api.py"]
