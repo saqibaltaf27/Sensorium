@@ -8,7 +8,7 @@ commands = [
 ]
 
 [phases.build]
-commands = []  # nothing to build
+commands = []
 
 [phases.start]
 commands = [
