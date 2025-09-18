@@ -1,0 +1,18 @@
+[phases.setup]
+nixPkgs = [
+  "python3",
+  "gcc",
+  "unixODBC",
+  "msodbcsql18" # SQL Server ODBC driver
+]
+
+[phases.install]
+cmds = [
+  # Create venv using symlinks to avoid "Text file busy" error
+  "python -m venv --symlinks /opt/venv",
+  ". /opt/venv/bin/activate",
+  "pip install --no-cache-dir -r requirements.txt"
+]
+
+[start]
+cmd = "python temp_api.py"
