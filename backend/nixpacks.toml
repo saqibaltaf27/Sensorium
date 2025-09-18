@@ -3,7 +3,7 @@ nixPkgs = [
   "python38",
   "gcc",
   "unixODBC",
-  "msodbcsql18"
+  "mssql-tools"
 ]
 
 [phases.install]
