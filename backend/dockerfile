@@ -1,7 +1,7 @@
-# Use official Python 3.8 slim image
+# Base image
 FROM python:3.8-slim
 
-# Install required packages for ODBC
+# Install dependencies for ODBC
 RUN apt-get update && apt-get install -y \
     curl \
     gnupg2 \
@@ -19,14 +19,15 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
 # Set working directory
 WORKDIR /app
 
-# Copy application code
+# Copy app code
 COPY . /app
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Create virtual environment and install Python dependencies
+RUN python3 -m venv /opt/venv \
+    && /opt/venv/bin/pip install --no-cache-dir -r requirements.txt
 
 # Expose Flask port
 EXPOSE 5000
 
-# Start the Flask app
-CMD ["python", "temp_api.py"]
+# Start Flask app using venv Python
+CMD ["/opt/venv/bin/python", "temp_api.py"]
