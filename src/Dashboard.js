@@ -4,8 +4,8 @@ import SensorSummary from './components/SensorSummary';
 import SensorChart from './components/SensorChart';
 import './Dashboard.css';
 
-const API_LATEST_URL = 'http://127.0.0.1:5000/api/sensor-data';
-const API_HISTORY_URL = 'http://127.0.0.1:5000/api/sensor-history';
+const API_LATEST_URL = 'https://tempmonitoringcontrolpanel-production.up.railway.app/api/sensor-data';
+const API_HISTORY_URL = 'https://tempmonitoringcontrolpanel-production.up.railway.app/api/sensor-history';
 
 const Dashboard = () => {
   const [sensorData, setSensorData] = useState([]);

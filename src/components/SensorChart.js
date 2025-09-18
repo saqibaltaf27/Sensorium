@@ -11,7 +11,7 @@ import {
 } from 'recharts';
 import './SensorChart.css';
 
-const API_HISTORY_URL = 'http://127.0.0.1:5000/api/sensor-history';
+const API_HISTORY_URL = 'https://tempmonitoringcontrolpanel-production.up.railway.app/api/sensor-history';
 const COLORS = {
   temperature: '#00509d',
   humidity: '#007ba7',
