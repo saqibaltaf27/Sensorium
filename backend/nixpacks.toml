@@ -1,25 +1,24 @@
 [phases.setup]
-# system dependencies
+# Install system dependencies
 packages = ["python38", "gcc", "unixODBC", "curl", "gnupg2", "build-essential"]
 
 [phases.install]
-# create virtual environment and install dependencies
+# Create virtual environment and install Python dependencies
 commands = [
     "python3 -m venv /opt/venv",
-    ". /opt/venv/bin/activate",
-    "pip install --no-cache-dir -r requirements.txt"
+    "/opt/venv/bin/pip install --no-cache-dir -r requirements.txt"
 ]
 
 [phases.build]
-# nothing to build for Flask
+# Nothing to build
 commands = []
 
 [phases.start]
-# start Flask app with venv activated
+# Run Flask using venv Python directly
 commands = [
-    ". /opt/venv/bin/activate",
-    "python temp_api.py"
+    "/opt/venv/bin/python temp_api.py"
 ]
 
 [env]
+# Ensure venv Python is used
 PATH = "/opt/venv/bin:$PATH"
