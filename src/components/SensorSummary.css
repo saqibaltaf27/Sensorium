@@ -1,0 +1,41 @@
+/* SensorSummary.css */
+.sensor-summary {
+  margin-bottom: 20px;
+}
+
+.sensor-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 0;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.metric-icon {
+  font-size: 2rem;
+  color: #00509d;
+}
+
+.metric-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #7e7e7e;
+}
+
+.metric-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
