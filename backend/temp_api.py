@@ -11,7 +11,7 @@ CORS(app)
 
 # SQL Server connection string
 sql_server_connection_string = (
-    "DRIVER={SQL Server Native Client 11.0};"
+    "DRIVER={ODBC Driver 18 for SQL Server};"
     "SERVER=192.168.10.1;"
     "DATABASE=RoomAlert;"
     "UID=sa;"
