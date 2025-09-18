@@ -1,19 +1,14 @@
 [phases.setup]
 nixPkgs = [
-  "python3",
+  "python38",
   "gcc",
-  "unixODBC"
+  "unixODBC",
+  "msodbcsql18"
 ]
 
 [phases.install]
 cmds = [
-  # Install Microsoft SQL Server ODBC driver
-  "curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -",
-  "curl https://packages.microsoft.com/config/debian/12/prod.list -o /etc/apt/sources.list.d/mssql-release.list",
-  "apt-get update",
-  "ACCEPT_EULA=Y apt-get install -y msodbcsql18",
-  # Create venv (use symlinks to avoid 'Text file busy')
-  "python -m venv --symlinks /opt/venv",
+  "python -m venv /opt/venv",
   ". /opt/venv/bin/activate",
   "pip install --no-cache-dir -r requirements.txt"
 ]
