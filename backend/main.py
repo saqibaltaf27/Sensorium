@@ -1,13 +1,23 @@
-from flask import Flask, jsonify, request
-from flask_cors import CORS
+from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime, timedelta
 import threading
 import requests
 import time
 import pyodbc
 
-app = Flask(__name__)
-CORS(app)
+app = FastAPI()
+
+# ----------------------------
+# CORS
+# ----------------------------
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # ----------------------------
 # SQL Server Connection
@@ -87,7 +97,7 @@ def sensor_polling_job():
 # ----------------------------
 # API Endpoints
 # ----------------------------
-@app.route('/api/sensor-data', methods=['GET'])
+@app.get("/api/sensor-data")
 def get_sensor_data():
     try:
         conn = pyodbc.connect(sql_server_connection_string)
@@ -115,22 +125,19 @@ def get_sensor_data():
         cursor.execute(query)
         columns = [column[0] for column in cursor.description]
         rows = [dict(zip(columns, row)) for row in cursor.fetchall()]
-        return jsonify(rows)
+        return rows
     except pyodbc.Error as e:
         print(f"Database error: {e}")
-        return jsonify({"error": "Failed to retrieve sensor data"}), 500
+        raise HTTPException(status_code=500, detail="Failed to retrieve sensor data")
     finally:
         if 'conn' in locals():
             conn.close()
 
-@app.route('/api/sensor-history', methods=['GET'])
-def get_sensor_history():
-    sensor_name = request.args.get('sensor_name')
-    time_range = request.args.get('time_range', 'daily')
-
-    if not sensor_name:
-        return jsonify({"error": "sensor_name parameter is required"}), 400
-
+@app.get("/api/sensor-history")
+def get_sensor_history(
+    sensor_name: str = Query(..., description="Sensor name"),
+    time_range: str = Query("daily", description="daily, weekly, monthly")
+):
     end_time = datetime.now()
     if time_range == 'daily':
         start_time = end_time - timedelta(hours=24)
@@ -139,7 +146,7 @@ def get_sensor_history():
     elif time_range == 'monthly':
         start_time = end_time - timedelta(days=30)
     else:
-        return jsonify({"error": "Invalid time_range. Use 'daily', 'weekly', or 'monthly'."}), 400
+        raise HTTPException(status_code=400, detail="Invalid time_range")
 
     try:
         conn = pyodbc.connect(sql_server_connection_string)
@@ -180,17 +187,15 @@ def get_sensor_history():
             for row in rows:
                 row['timestamp'] = row.pop('aggregated_time')
 
-        return jsonify(rows)
+        return rows
     except pyodbc.Error as e:
         print(f"Database error: {e}")
-        return jsonify({"error": "Failed to retrieve history"}), 500
+        raise HTTPException(status_code=500, detail="Failed to retrieve history")
     finally:
         if 'conn' in locals():
             conn.close()
 
 # ----------------------------
-# Start Background Thread & Flask
+# Start Background Thread
 # ----------------------------
-if __name__ == '__main__':
-    threading.Thread(target=sensor_polling_job, daemon=True).start()
-    app.run(port=5000, host='0.0.0.0')
+threading.Thread(target=sensor_polling_job, daemon=True).start()
