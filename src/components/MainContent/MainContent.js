@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AllSensorsDisplay from '../AllSensorsDisplay/AllSensorsDisplay';
 import SensorLoadingScreen from '../Loading/SensorLoadingScreen';
 
-const API_BASE_URL = 'https://temp-monitoring-api.vercel.app/api';
+const API_BASE_URL = 'https://sensorium-api.vercel.app/api';
 
 const MainContent = ({ selectedSensor }) => {
   const [allSensorsData, setAllSensorsData] = useState([]);
