@@ -1,0 +1,75 @@
+/* MainContent.css */
+
+.main-content-container {
+  flex-grow: 2; /* Allows the main content to take up the remaining space */
+  padding: 2rem;
+  background-color: #f9fafb;
+}
+
+.main-content-container h2 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 2.5rem;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 0.5rem;
+}
+
+.main-header {
+  display: flex; /* Makes the children flex items */
+  justify-content: space-between; /* Pushes the first item to the left and the last to the right */
+  align-items: center; /* Aligns items vertically in the middle */
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+.loading, .error {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #888;
+  margin-top: 5rem;
+}
+
+.error {
+  color: #d9534f;
+}
+
+.sensor-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.sensor-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.sensor-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.sensor-card h3 {
+  font-size: 1.25rem;
+  color: #007bff;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.sensor-card p {
+  margin: 0;
+  color: #555;
+  line-height: 1.5;
+}
+
+.sensor-card p strong {
+  color: #333;
+}

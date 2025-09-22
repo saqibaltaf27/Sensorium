@@ -1,0 +1,82 @@
+/* Sidebar.css */
+.sidebar-container {
+  background-color: #f4f7fa;
+  width: 250px;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  color: #333;
+}
+
+.sidebar-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.logo {
+  font-size: 1.8rem;
+  color: #007bff;
+  font-weight: 600;
+}
+
+.sidebar-nav {
+  flex-grow: 1; /* Pushes the footer to the bottom */
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-item {
+  margin-bottom: 0.5rem;
+}
+
+.sidebar-button {
+  width: 100%;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #555;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar-button:hover {
+  background-color: #e2eaf4;
+  color: #000;
+}
+
+.sidebar-button.active {
+  background-color: #007bff;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.sidebar-button.active:hover {
+  background-color: #0056b3;
+}
+
+.sidebar-footer {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #999;
+  margin-top: 2rem;
+}
+
+/* Optional: Add a subtle scrollbar if content overflows */
+.sidebar-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-container::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 3px;
+}
