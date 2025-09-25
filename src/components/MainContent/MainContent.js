@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AllSensorsDisplay from '../AllSensorsDisplay/AllSensorsDisplay';
 import SensorLoadingScreen from '../Loading/SensorLoadingScreen';
+import './MainContent.css';
 
 const API_BASE_URL = 'https://sensorium-api.vercel.app/api';
 
@@ -28,41 +29,46 @@ const MainContent = ({ selectedSensor }) => {
 
       setAllSensorsData(sensorsData);
       setDeviceInfo(devicesData);
-      setLastUpdated(new Date()); // Update the timestamp
+      setLastUpdated(new Date());
     } catch (error) {
       console.error("Error fetching data:", error);
-      // Optional: Handle error state in UI
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    // Initial data fetch
     setLoading(true);
     fetchAllData();
 
-    // Set up auto-refresh
     const intervalId = setInterval(() => {
       fetchAllData();
-    }, 5000); // 5000 milliseconds = 5 seconds
+    }, 5000);
 
-    // Clean up the interval when the component unmounts or selectedSensor changes
     return () => clearInterval(intervalId);
-  }, [selectedSensor]); // Dependency on selectedSensor ensures interval is reset
-
-  if (loading) {
-    return <SensorLoadingScreen />;
-  }
+  }, [selectedSensor]);
 
   return (
-    <main className="main-content">
+    <main className="main-content-container">
       <header className="main-header">
         <h2 className="header-title">Live {selectedSensor} Data</h2>
-        <span className="last-updated">Last updated: {lastUpdated.toLocaleTimeString()}</span>
+        <span className="last-updated">
+          Last updated: {lastUpdated.toLocaleTimeString()}
+        </span>
       </header>
+
       <div className="content-area">
-        <AllSensorsDisplay allSensorsData={allSensorsData} deviceInfo={deviceInfo} selectedSensor={selectedSensor} />
+        {loading ? (
+          <div className="inline-loading">
+            <SensorLoadingScreen />
+          </div>
+        ) : (
+          <AllSensorsDisplay
+            allSensorsData={allSensorsData}
+            deviceInfo={deviceInfo}
+            selectedSensor={selectedSensor}
+          />
+        )}
       </div>
     </main>
   );

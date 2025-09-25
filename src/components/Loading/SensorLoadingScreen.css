@@ -1,109 +1,102 @@
+/* --------------------------- */
+/* Sensor Loading Overlay */
+/* --------------------------- */
 .sensor-loading-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #1a202c; /* Darker, tech-like background */
+  /* Using a dark, subtle gradient for a professional look */
+  background: linear-gradient(135deg, #121212, #1a202c);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 9999; /* Ensure it's on top */
-  color: #e2e8f0; /* Light grey text */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  overflow: hidden; /* Prevent scrollbars */
+  z-index: 9999;
+  color: #e2e8f0;
+  font-family: 'Inter', sans-serif; /* A more modern font */
+  overflow: hidden;
+  backdrop-filter: blur(4px);
+  animation: overlayFadeIn 0.5s ease forwards;
 }
 
 .sensor-loading-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px; /* Space between spinner and text */
+  gap: 30px;
 }
 
-.sensor-pulse-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  gap: 8px;
-  width: 80px; /* Overall size of the grid */
-  height: 80px;
-  transform: rotate(45deg); /* Tilt the grid for a diamond effect */
+/* --------------------------- */
+/* REVISED: Sleek Spinner Animation */
+/* --------------------------- */
+.sensor-loader-spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #63b3ed; /* Professional blue for the active part */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  box-shadow: 0 0 10px #63b3ed, 0 0 20px #63b3ed; /* Subtle glowing effect */
 }
 
-.sensor-pulse-item {
-  width: 20px;
-  height: 20px;
-  background-color: #4a5568; /* Initial grey for dots */
-  border-radius: 4px; /* Slightly rounded squares */
-  animation: sensorPulse 1.5s infinite ease-in-out;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Subtle shadow */
-}
-
-/* Individual animation delays for a wave effect */
-.sensor-pulse-item:nth-child(1) { animation-delay: 0.1s; }
-.sensor-pulse-item:nth-child(2) { animation-delay: 0.2s; }
-.sensor-pulse-item:nth-child(3) { animation-delay: 0.3s; }
-.sensor-pulse-item:nth-child(4) { animation-delay: 0.4s; }
-.sensor-pulse-item:nth-child(5) { animation-delay: 0.5s; } /* Center */
-.sensor-pulse-item:nth-child(6) { animation-delay: 0.6s; }
-.sensor-pulse-item:nth-child(7) { animation-delay: 0.7s; }
-.sensor-pulse-item:nth-child(8) { animation-delay: 0.8s; }
-.sensor-pulse-item:nth-child(9) { animation-delay: 0.9s; }
-
-@keyframes sensorPulse {
-  0%, 100% {
-    background-color: #4a5568; /* Initial color */
-    transform: scale(1);
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-  }
-  50% {
-    background-color: #63b3ed; /* Brighter blue for pulse */
-    transform: scale(1.15); /* Slightly larger */
-    box-shadow: 0 0 15px #63b3ed, 0 0 20px #63b3ed; /* Glowing effect */
+/* Spinner Animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
+/* --------------------------- */
+/* REVISED: Loading Text */
+/* --------------------------- */
 .sensor-loading-text {
-  font-size: 1.5em;
-  font-weight: 600;
+  font-size: 1.6em;
+  font-weight: 700;
   letter-spacing: 1px;
   text-align: center;
-  display: flex; /* For the dot animation */
-  align-items: flex-end; /* Align dots with text baseline */
-  animation: fadeInText 1.5s ease-out forwards;
-  opacity: 0; /* Start hidden for fadeInText */
+  display: flex;
+  align-items: flex-end;
 }
 
 .connecting-text {
-  color: #cbd5e0; /* Slightly lighter than overlay text */
+  color: #a0aec0; /* A softer, professional gray */
 }
 
+/* REVISED: Dot Animation */
 .dot-animation {
-  overflow: hidden;
-  display: inline-block;
-  vertical-align: bottom; /* Keep dots aligned */
-  width: 1.5em; /* Reserve space for dots */
+  font-size: 1.5em; /* Larger, more prominent dots */
+  animation: dot-fade 1.5s infinite ease-in-out;
+  color: #63b3ed; /* Color matching the spinner */
 }
 
-.dot-animation::after {
-  content: '...';
-  display: inline-block;
-  width: 0px; /* Initially hidden */
-  vertical-align: bottom;
-  animation: dotPulse 1.5s steps(4) infinite;
+.dot-animation:nth-child(2) {
+  animation-delay: 0.2s; /* Stagger the animation */
 }
 
-@keyframes dotPulse {
-  0%   { content: ''; width: 0px; }
-  25%  { content: '.'; width: 0.5em; }
-  50%  { content: '..'; width: 1em; }
-  75%  { content: '...'; width: 1.5em; }
-  100% { content: '...'; width: 1.5em; } /* Keep full for a moment */
+.dot-animation:nth-child(3) {
+  animation-delay: 0.4s;
 }
 
-@keyframes fadeInText {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Dot Fade Animation */
+@keyframes dot-fade {
+  0%, 80%, 100% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+/* --------------------------- */
+/* General Animations */
+/* --------------------------- */
+@keyframes overlayFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

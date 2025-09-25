@@ -1,75 +1,148 @@
 /* MainContent.css */
 
 .main-content-container {
-  flex-grow: 2; /* Allows the main content to take up the remaining space */
-  padding: 2rem;
-  background-color: #f9fafb;
+  flex-grow: 2;
+  padding: 2.5rem;
+  background: linear-gradient(135deg, #f9fafb, #eef2f7);
+  min-height: 100vh;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
+/* Section Heading */
 .main-content-container h2 {
-  font-size: 2.5rem;
-  color: #333;
-  margin-bottom: 2.5rem;
-  border-bottom: 2px solid #e0e0e0;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 2rem;
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(90deg, #007bff, #21cbf3);
+  border-image-slice: 1;
+  display: inline-block;
   padding-bottom: 0.5rem;
+  letter-spacing: 0.5px;
 }
 
+/* Header bar */
 .main-header {
-  display: flex; /* Makes the children flex items */
-  justify-content: space-between; /* Pushes the first item to the left and the last to the right */
-  align-items: center; /* Aligns items vertically in the middle */
-  padding-bottom: 10px;
-  border-bottom: 1px solid #ccc;
-  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 28px;
 }
 
+.main-header h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #007bff;
+}
+
+/* States */
 .loading, .error {
   text-align: center;
-  font-size: 1.5rem;
-  color: #888;
+  font-size: 1.4rem;
   margin-top: 5rem;
+  font-weight: 500;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.loading {
+  color: #555;
 }
 
 .error {
   color: #d9534f;
 }
 
+/* Sensor List Grid */
 .sensor-list {
   list-style: none;
   padding: 0;
   margin: 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
+  gap: 1.8rem;
+  animation: fadeInUp 0.6s ease-in-out;
 }
 
+/* Sensor Card */
 .sensor-card {
-  background-color: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s, box-shadow 0.2s;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  padding: 1.8rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  backdrop-filter: blur(12px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .sensor-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0, 123, 255, 0.15);
+}
+
+/* Glow border animation */
+.sensor-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 2px;
+  background: linear-gradient(135deg, rgba(0,123,255,0.6), rgba(33,203,243,0.6));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+  pointer-events: none;
+}
+
+.sensor-card:hover::before {
+  opacity: 1;
 }
 
 .sensor-card h3 {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
+  font-weight: 600;
   color: #007bff;
   margin-top: 0;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
 }
 
 .sensor-card p {
-  margin: 0;
-  color: #555;
+  margin: 0.3rem 0;
+  color: #444;
   line-height: 1.5;
 }
 
 .sensor-card p strong {
-  color: #333;
+  color: #111;
+  font-weight: 600;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.inline-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px; /* or any area height you want */
+  width: 100%;
+}
+
+.inline-loading .sensor-loading-screen {
+  position: static !important;  /* remove fixed positioning */
+  height: auto !important;
+  width: auto !important;
 }

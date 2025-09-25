@@ -5,12 +5,22 @@ body, html {
   font-family: Arial, sans-serif;
   background-color: #f0f2f5;
   color: #333;
+  overflow: auto;   /* keep scrolling working */
+  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; 
 }
 
 /* --- App Layout (Fixing the main issue) --- */
 .app-container {
   display: flex;
   min-height: 100vh; /* Make the container fill the entire viewport height */
+}
+
+.inline-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh; /* keeps it centered in content area */
 }
 
 /* --- Sidebar Styles --- */
