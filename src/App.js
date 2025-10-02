@@ -3,11 +3,10 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import MainContent from "./components/MainContent/MainContent";
 import SensorLoadingScreen from "./components/Loading/SensorLoadingScreen";
 import ReportsPage from "./components/Reports/ReportsPage";
-import WelcomePage from "./components/Welcome/Welcome"; 
-import "./styles.css";
+import WelcomePage from "./components/Welcome/Welcome";
 
 const App = () => {
-  const [selectedPage, setSelectedPage] = useState("welcome"); 
+  const [selectedPage, setSelectedPage] = useState("welcome");
   const [selectedSensor, setSelectedSensor] = useState(null);
   const [selectedReport, setSelectedReport] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -42,7 +41,8 @@ const App = () => {
   };
 
   return (
-    <div className="app-container">
+    <div className="flex min-h-screen bg-gray-100">
+      {/* Sidebar */}
       <Sidebar
         onSensorSelect={handleSensorSelect}
         onReportSelect={handleReportSelect}
@@ -54,10 +54,10 @@ const App = () => {
         setReportsOpen={setReportsOpen}
       />
 
-      <main className="main-content">
+      {/* Main Content */}
+      <main className="flex-1 p-6 overflow-auto">
         {loading ? (
-          // Inline loader
-          <div className="inline-loading">
+          <div className="flex justify-center items-center h-[70vh]">
             <SensorLoadingScreen />
           </div>
         ) : (
